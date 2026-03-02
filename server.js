@@ -157,6 +157,26 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+/* ================= GET PROFILE ================= */
+
+app.get("/api/profile", verifyUser, async (req, res) => {
+  try {
+    const { data: profile, error } = await supabaseAdmin
+      .from("profiles")
+      .select("role, approved")
+      .eq("id", req.user.id)
+      .single();
+
+    if (error || !profile) {
+      return res.status(400).json({ message: "Profile not found" });
+    }
+
+    res.json(profile);
+
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch profile" });
+  }
+});
 
 /* ================= GET EVENTS ================= */
 
@@ -843,8 +863,14 @@ app.post("/api/tickets", verifyUser, async (req, res) => {
 
 app.get("/api/dashboard/user", verifyUser, async (req, res) => {
   try {
-
     const userId = req.user.id;
+    const { data: profile } = await supabaseAdmin
+      .from("profiles")
+      .select("name, role, bio")
+      .eq("id", userId)
+      .single();
+
+    
 
     const { data: events } = await supabaseAdmin
       .from("events")
