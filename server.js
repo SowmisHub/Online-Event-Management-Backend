@@ -38,7 +38,7 @@ app.use("/api/admin/analytics", analyticsRoutes);
 app.use("/api/admin/chat", chatRoutes);
 
 /* 🔥 FIXED FEEDBACK ROUTE */
-app.use("/api/admin/feedback", feedbackRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 /* ================= DASHBOARD ================= */
 app.use("/api/dashboard", dashboardRoutes);

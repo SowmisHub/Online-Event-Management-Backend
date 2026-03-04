@@ -56,42 +56,31 @@ exports.registerEvent = async (req, res) => {
 
     try {
 
-      await transporter.sendMail({
+      transporter.sendMail({
         from: `"Event Platform" <${process.env.EMAIL_USER}>`,
         to: email,
         subject: `🎉 Registration Confirmed - ${event?.title || "Event"}`,
         html: `
-          <div style="font-family: Arial; padding:20px">
-            
+            <div style="font-family: Arial; padding:20px">
             <h2>🎉 Registration Confirmed!</h2>
-
             <p>Hello <b>${name}</b>,</p>
-
             <p>You have successfully registered for:</p>
 
             <div style="background:#f3f4f6;padding:15px;border-radius:8px">
-              <p><strong>Event:</strong> ${event?.title}</p>
-              <p><strong>Date:</strong> ${event?.date ? new Date(event.date).toDateString() : ""}</p>
-              <p><strong>Category:</strong> ${event?.category || ""}</p>
-              <p><strong>Location:</strong> ${event?.location || "Online"}</p>
-              <p><strong>Price:</strong> ${
-                event?.price == 0 ? "Free" : `$${event?.price}`
-              }</p>
+                <p><strong>Event:</strong> ${event?.title}</p>
+                <p><strong>Date:</strong> ${
+                event?.date ? new Date(event.date).toDateString() : ""
+                }</p>
+                <p><strong>Category:</strong> ${event?.category || ""}</p>
+                <p><strong>Location:</strong> ${event?.location || "Online"}</p>
             </div>
 
-            <p style="margin-top:15px">
-              We look forward to seeing you!
-            </p>
-
-            <p style="margin-top:20px;font-size:12px;color:gray">
-              This is an automated email. Please do not reply.
-            </p>
-
-          </div>
-        `,
-      });
-
-      console.log("✅ Registration email sent");
+            <p>We look forward to seeing you!</p>
+            </div>
+        `
+        })
+        .then(() => console.log("Registration email sent"))
+        .catch(err => console.log("Email error:", err));
 
     } catch (mailError) {
 
