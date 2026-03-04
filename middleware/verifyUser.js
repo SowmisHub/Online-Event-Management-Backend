@@ -1,3 +1,5 @@
+const { supabaseAdmin } = require("../config/supabaseClient");
+
 const verifyUser = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
@@ -6,8 +8,7 @@ const verifyUser = async (req, res, next) => {
       return res.status(401).json({ message: "No token provided" });
     }
 
-    const { data, error } =
-      await supabaseAdmin.auth.getUser(token);
+    const { data, error } = await supabaseAdmin.auth.getUser(token);
 
     if (error || !data.user) {
       return res.status(401).json({ message: "Invalid token" });
@@ -20,3 +21,5 @@ const verifyUser = async (req, res, next) => {
     return res.status(401).json({ message: "Unauthorized" });
   }
 };
+
+module.exports = verifyUser;

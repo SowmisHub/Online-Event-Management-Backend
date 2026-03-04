@@ -4,21 +4,21 @@ const router = express.Router();
 const verifyUser = require("../middleware/verifyUser");
 const verifyAdmin = require("../middleware/verifyAdmin");
 
-const dashboardController = require("../controllers/dashboardController");
+const feedbackController = require("../controllers/feedbackController");
 
-/* ================= DASHBOARD ROUTES ================= */
+/* ================= FEEDBACK ROUTES ================= */
 
-router.get(
-  "/user",
+router.post(
+  "/",
   verifyUser,
-  dashboardController.userDashboard
+  feedbackController.submitFeedback
 );
 
 router.get(
-  "/admin",
+  "/",
   verifyUser,
   verifyAdmin,
-  dashboardController.adminDashboard
+  feedbackController.getFeedback
 );
 
 module.exports = router;

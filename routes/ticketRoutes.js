@@ -3,14 +3,14 @@ const router = express.Router();
 
 const verifyUser = require("../middleware/verifyUser");
 
-const profileController = require("../controllers/profileController");
+const ticketController = require("../controllers/ticketController");
 
-/* ================= PROFILE ROUTE ================= */
+/* ================= TICKET ROUTE ================= */
 
-router.get(
+router.post(
   "/",
   verifyUser,
-  profileController.getProfile
+  ticketController.createTicket
 );
 
 module.exports = router;
