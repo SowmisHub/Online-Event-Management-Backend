@@ -37,7 +37,8 @@ app.use("/api/admin/announcements", announcementRoutes);
 app.use("/api/admin/analytics", analyticsRoutes);
 app.use("/api/admin/chat", chatRoutes);
 
-/* 🔥 FIXED FEEDBACK ROUTE */
+/*  FEEDBACK ROUTE */
+app.use("/api/admin/feedback", feedbackRoutes);
 app.use("/api/feedback", feedbackRoutes);
 
 /* ================= DASHBOARD ================= */
