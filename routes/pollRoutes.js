@@ -8,9 +8,9 @@ const pollController = require("../controllers/pollController");
 
 /* ================= ADMIN POLL ROUTES ================= */
 
-/* GET POLLS */
+/* GET POLLS (ADMIN) */
 router.get(
-  "/polls",
+  "/admin/polls",
   verifyUser,
   verifyAdmin,
   pollController.getPolls
@@ -18,7 +18,7 @@ router.get(
 
 /* CREATE POLL */
 router.post(
-  "/polls",
+  "/admin/polls",
   verifyUser,
   verifyAdmin,
   pollController.createPoll
@@ -26,7 +26,7 @@ router.post(
 
 /* UPDATE POLL */
 router.put(
-  "/polls/:id",
+  "/admin/polls/:id",
   verifyUser,
   verifyAdmin,
   pollController.updatePoll
@@ -34,11 +34,12 @@ router.put(
 
 /* DELETE POLL */
 router.delete(
-  "/polls/:id",
+  "/admin/polls/:id",
   verifyUser,
   verifyAdmin,
   pollController.deletePoll
 );
+
 
 /* ================= USER VOTE ================= */
 
