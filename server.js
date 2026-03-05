@@ -54,7 +54,7 @@ app.use("/api/register", registrationRoutes);
 app.use("/api/tickets", ticketRoutes);
 
 /* ================= POLLS ================= */
-app.use("/api/admin", pollRoutes);
+app.use("/api", pollRoutes);
 
 /* ================= QA ================= */
 app.use("/api/qa", qaRoutes);
