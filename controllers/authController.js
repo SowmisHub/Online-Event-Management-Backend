@@ -70,6 +70,63 @@ exports.login = async (req, res) => {
   }
 };
 
+/* ================= GOOGLE LOGIN ================= */
+
+exports.googleLogin = async (req, res) => {
+
+  try {
+
+    const { token } = req.body;
+
+    const { data: userData, error } =
+      await supabaseAdmin.auth.getUser(token);
+
+    if (error) {
+      return res.status(401).json({ message: "Invalid Google token" });
+    }
+
+    const user = userData.user;
+
+    /* Check if profile exists */
+
+    const { data: profile } =
+      await supabaseAdmin
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+    if (!profile) {
+
+      /* create attendee profile automatically */
+
+      await supabaseAdmin.from("profiles").insert({
+        id: user.id,
+        name: user.user_metadata.full_name || "Google User",
+        role: "attendee",
+        approved: true
+      });
+
+    }
+
+    const { data: newProfile } =
+      await supabaseAdmin
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+    res.json({
+      token,
+      role: newProfile.role,
+      approved: newProfile.approved
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+
+};
 
 /* ================= FORGOT PASSWORD ================= */
 
